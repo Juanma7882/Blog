@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ZiHZpHAOdJSG6t4QNXGec6xLNovRqrU5WYZuiGprLX0=",
+  "Source": "MiBlog",
+  "BasePath": "_content/MiBlog",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
