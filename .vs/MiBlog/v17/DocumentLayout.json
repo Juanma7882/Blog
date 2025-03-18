@@ -7,44 +7,12 @@
       "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\appdbcontext\\appdbblogcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:appdbcontext\\appdbblogcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:dtos\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\dtos\\sesiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:dtos\\sesiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:entities\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\mapper\\mapperclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:mapper\\mapperclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\enums\\rolesenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:enums\\rolesenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\migrations\\20250312205905_primeramigracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:migrations\\20250312205905_primeramigracion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|c:\\users\\juan\\desktop\\blog\\miblog\\servicios\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1742807-4FE2-45A3-B118-581F46FB516F}|MiBlog.csproj|solutionrelative:servicios\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,27 +34,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MapperClass.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Mapper\\MapperClass.cs",
-              "RelativeDocumentMoniker": "Mapper\\MapperClass.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Mapper\\MapperClass.cs",
-              "RelativeToolTip": "Mapper\\MapperClass.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA7AAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAYwCEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T21:31:39.076Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "20250312205905_PrimeraMigracion.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Migrations\\20250312205905_PrimeraMigracion.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250312205905_PrimeraMigracion.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Migrations\\20250312205905_PrimeraMigracion.cs",
-              "RelativeToolTip": "Migrations\\20250312205905_PrimeraMigracion.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T20:59:05.714Z"
+              "WhenOpened": "2025-03-18T19:03:22.753Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -96,110 +53,23 @@
               "RelativeDocumentMoniker": "Controllers\\UsuarioController.cs",
               "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "Controllers\\UsuarioController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAF0AAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAkwLIAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T20:10:40.079Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "RolesEnum.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Enums\\RolesEnum.cs",
-              "RelativeDocumentMoniker": "Enums\\RolesEnum.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Enums\\RolesEnum.cs",
-              "RelativeToolTip": "Enums\\RolesEnum.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T14:36:27.004Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SesionDTO.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\SesionDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\SesionDTO.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\SesionDTO.cs",
-              "RelativeToolTip": "DTOs\\SesionDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T14:09:37.042Z",
+              "WhenOpened": "2025-03-18T19:02:17.618Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UsuarioDTO.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\UsuarioDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\UsuarioDTO.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\UsuarioDTO.cs",
-              "RelativeToolTip": "DTOs\\UsuarioDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAqAAAAAAAAAA==",
+              "Title": "JWTService.cs",
+              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Servicios\\JWTService.cs",
+              "RelativeDocumentMoniker": "Servicios\\JWTService.cs",
+              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Servicios\\JWTService.cs",
+              "RelativeToolTip": "Servicios\\JWTService.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAswIkAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T14:05:47.544Z",
+              "WhenOpened": "2025-03-16T15:32:50.641Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "LoginDTO.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\LoginDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\LoginDTO.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\DTOs\\LoginDTO.cs",
-              "RelativeToolTip": "DTOs\\LoginDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T13:55:00.916Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-11T15:23:15.398Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AppDbBlogContext.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\AppDbContext\\AppDbBlogContext.cs",
-              "RelativeDocumentMoniker": "AppDbContext\\AppDbBlogContext.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\AppDbContext\\AppDbBlogContext.cs",
-              "RelativeToolTip": "AppDbContext\\AppDbBlogContext.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T15:22:59.062Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Entities\\Usuario.cs",
-              "RelativeDocumentMoniker": "Entities\\Usuario.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Entities\\Usuario.cs",
-              "RelativeToolTip": "Entities\\Usuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T15:19:38.128Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\juan\\Desktop\\blog\\MiBlog\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBgAAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T15:16:37.521Z"
             }
           ]
         }

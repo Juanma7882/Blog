@@ -1,4 +1,6 @@
-﻿namespace MiBlog.DTOs
+﻿using MiBlog.Enums;
+
+namespace MiBlog.DTOs
 {
     public class SesionDTO
     {
@@ -8,5 +10,7 @@
         public string Apellido { get; set; }
         public string Email { get; set; }
         public int Dni { get; set; }
+        public List<RolesEnum> UsuarioRoles { get; set; } = new List<RolesEnum>();
+
     }
 }

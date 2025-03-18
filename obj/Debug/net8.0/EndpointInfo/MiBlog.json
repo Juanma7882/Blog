@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Usuario": {
+    "/api/Usuario/CrearUsuario": {
       "post": {
         "tags": [
           "Usuario"
@@ -64,17 +64,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SesionDTO"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SesionDTO"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SesionDTO"
+                  }
                 }
               }
             }
@@ -82,7 +91,7 @@
         }
       }
     },
-    "/api/Usuario/{id}": {
+    "/api/Usuario/ActualizarUsuario/{id}": {
       "put": {
         "tags": [
           "Usuario"
@@ -139,7 +148,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/Usuario/ObtenerUsuario/{id}": {
       "get": {
         "tags": [
           "Usuario"
@@ -161,23 +172,25 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "$ref": "#/components/schemas/SesionDTO"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "$ref": "#/components/schemas/SesionDTO"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
+                  "$ref": "#/components/schemas/SesionDTO"
                 }
               }
             }
           }
         }
-      },
+      }
+    },
+    "/api/Usuario/EliminarUsuario/{id}": {
       "delete": {
         "tags": [
           "Usuario"
@@ -195,24 +208,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Usuario"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Usuario"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Usuario"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -259,9 +255,17 @@
   },
   "components": {
     "schemas": {
-      "Usuario": {
+      "RolesEnum": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "SesionDTO": {
         "required": [
-          "clave",
           "nombreUsuario"
         ],
         "type": "object",
@@ -271,10 +275,6 @@
             "format": "int32"
           },
           "nombreUsuario": {
-            "type": "string",
-            "nullable": true
-          },
-          "clave": {
             "type": "string",
             "nullable": true
           },
@@ -293,6 +293,13 @@
           "dni": {
             "type": "integer",
             "format": "int32"
+          },
+          "usuarioRoles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolesEnum"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -327,6 +334,13 @@
           "dni": {
             "type": "integer",
             "format": "int32"
+          },
+          "usuarioRoles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolesEnum"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

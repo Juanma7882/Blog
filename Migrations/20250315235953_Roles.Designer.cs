@@ -3,6 +3,7 @@ using MiBlog.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiBlog.Migrations
 {
     [DbContext(typeof(AppDbBlogContext))]
-    partial class AppDbBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20250315235953_Roles")]
+    partial class Roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,12 +49,12 @@ namespace MiBlog.Migrations
                         new
                         {
                             IdRol = 2,
-                            NombreRol = "AdministrarUsuarios"
+                            NombreRol = "Administrar Usuarios"
                         },
                         new
                         {
                             IdRol = 3,
-                            NombreRol = "AdministrarBlog"
+                            NombreRol = "Administrar Blog"
                         });
                 });
 

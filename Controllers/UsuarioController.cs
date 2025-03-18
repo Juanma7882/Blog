@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using MiBlog.DTOs;
 using MiBlog.Mapper;
 using AutoMapper;
-
+using MiBlog.Servicios;
+using System.IdentityModel.Tokens.Jwt;
 namespace MiBlog.Controllers
 {
     [Route("api/[controller]")]
@@ -17,15 +18,55 @@ namespace MiBlog.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly AppDbBlogContext _appDbContext;
-        private readonly IMapper _mapper;
+        private readonly JWTService _jwtService;
 
-        public UsuarioController(AppDbBlogContext appDbContext, IMapper mapper)
+
+        public UsuarioController(AppDbBlogContext appDbContext,JWTService jwtService)
         {
             _appDbContext = appDbContext;
-            _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> IniciarSesion([FromBody] LoginDTO loginDTO)
+        {
+            try
+            {
+                if (loginDTO == null)
+                {
+                    return BadRequest("Los datos de login no pueden estar vacíos.");
+                }
+                var usuario = await _jwtService.ValidarLogin(loginDTO);
+
+                if (usuario == null)
+                {
+                    return BadRequest("Los datos de login no pueden estar vacíos.");
+                }
+
+                var token = await _jwtService.GenerarToken(usuario);
+
+                if (token == null)
+                {
+                    return StatusCode(500, "Error al generar el token.");
+                }
+                return Ok(new
+                {
+                    success = true,
+                    message = "Login exitoso",
+                    token = token
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+
+        [HttpPost]
+        [Route("CrearUsuario")]
         public async Task<ActionResult<UsuarioDTO>> CrearUsuario(UsuarioDTO usuarioDTO)
         {
             try
@@ -43,13 +84,13 @@ namespace MiBlog.Controllers
                 }
 
                 // Mapear de UsuarioDTO a Usuario
-                Usuario nuevoUsuario = _mapper.Map<Usuario>(usuarioDTO);
+                Usuario nuevoUsuario = MapperClass.MapUsuarioDtoToUsuario(usuarioDTO);
 
                 _appDbContext.Usuarios.Add(nuevoUsuario);
                 await _appDbContext.SaveChangesAsync();
 
                 // Mapear de Usuario a UsuarioDTO
-                UsuarioDTO usuarioCreado = _mapper.Map<UsuarioDTO>(nuevoUsuario);
+                UsuarioDTO usuarioCreado = MapperClass.MapUsuarioToUsuarioDTO(nuevoUsuario);
 
                 return CreatedAtAction(nameof(CrearUsuario), new { id = nuevoUsuario.IdPersona }, usuarioCreado);
             }
@@ -66,22 +107,27 @@ namespace MiBlog.Controllers
 
         [HttpGet]
         [Route("ListarUsuarios")]
-        public async Task<ActionResult<UsuarioDTO>> ListarUsuarios()
+        public async Task<ActionResult<List<SesionDTO>>> ListarUsuarios()
         {
             try
             {
-                List<Usuario> usuarios = await _appDbContext.Usuarios.ToListAsync();
-                List<UsuarioDTO> usuariosDTO = _mapper.Map<List<UsuarioDTO>>(usuarios);
-                return Ok(usuariosDTO);
+                List<Usuario> usuarios = await _appDbContext.Usuarios
+             .Include(u => u.UsuarioRoles)
+             .ThenInclude(ur => ur.Rol)
+             .ToListAsync();
+
+                List<SesionDTO> sesionDTOs = usuarios.Select(usuario => MapperClass.MapUsuarioToSesiondto(usuario)).ToList();
+
+                return Ok(sesionDTOs);
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al Listar un usuario " + ex.Message);
+                return StatusCode(500, $"Error al listar usuarios: {ex.Message}");
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioDTO>> ActualizarUsuario(int id,UsuarioDTO usuarioDTO)
+        [HttpPut("ActualizarUsuario/{id}")]
+        public async Task<ActionResult<UsuarioDTO>> ActualizarUsuario(int id, UsuarioDTO usuarioDTO)
         {
             try
             {
@@ -91,10 +137,18 @@ namespace MiBlog.Controllers
                     return NotFound();
                 }
 
-                // Mapear datos sobre la entidad existente en lugar de reemplazarla
-                _mapper.Map(usuarioDTO, usuario);
+                usuario.NombreUsuario = usuarioDTO.NombreUsuario;
+                usuario.Clave = usuarioDTO.Clave; // Recuerda encriptar la clave si es necesario
+                usuario.Nombre = usuarioDTO.Nombre;
+                usuario.Apellido = usuarioDTO.Apellido;
+                usuario.Email = usuarioDTO.Email;
+                usuario.Dni = usuarioDTO.Dni;
 
-                _appDbContext.Entry(usuario).State = EntityState.Modified;
+
+                // Actualizar roles si es necesario
+                usuario.UsuarioRoles.Clear();
+                usuario.UsuarioRoles.AddRange(usuarioDTO.UsuarioRoles.Select(rol => new UsuarioRol { IdRol = (int)rol, IdUsuario = usuario.IdPersona }));
+
                 await _appDbContext.SaveChangesAsync();
 
                 return Ok(usuarioDTO);
@@ -102,13 +156,13 @@ namespace MiBlog.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al ACTUALIZAR un usuario " +ex.Message);
+                throw new Exception("Error al ACTUALIZAR un usuario " + ex.Message);
             }
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioDTO>> ObtenerUsuario(int id)
+        [HttpGet("ObtenerUsuario/{id}")]
+        public async Task<ActionResult<SesionDTO>> ObtenerUsuario(int id)
         {
             try
             {
@@ -117,18 +171,18 @@ namespace MiBlog.Controllers
                 {
                     return NotFound();
                 }
-                SesionDTO UsuarioSesion = _mapper.Map<SesionDTO>(usuario);
+                SesionDTO UsuarioSesion = MapperClass.MapUsuarioToSesiondto(usuario);
 
                 return Ok(UsuarioSesion);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("Error al obtener un usuario " +ex.Message);
+                throw new Exception("Error al obtener un usuario " + ex.Message);
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Usuario>> EliminarUsuario(int id)
+        [HttpDelete("EliminarUsuario/{id}")]
+        public async Task<ActionResult> EliminarUsuario(int id)
         {
             try
             {
@@ -142,9 +196,9 @@ namespace MiBlog.Controllers
                 _appDbContext.Usuarios.Remove(usuario);
                 await _appDbContext.SaveChangesAsync();
 
-                return NoContent();
+                return Ok(new {messaje = "usuario eliminado correctamente"}); 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Error al elimanar un usuario", ex);
             }

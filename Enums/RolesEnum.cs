@@ -2,7 +2,8 @@
 {
     public enum RolesEnum
     {
-        Administrador = 1,
-        Usuario = 2
+        SuperAdministrador = 1,
+        AdministrarBlog = 2,
+        AdministrarUsuarios= 3
     }
 }

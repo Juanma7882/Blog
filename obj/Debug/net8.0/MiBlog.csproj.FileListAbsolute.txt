@@ -172,3 +172,5 @@ C:\Users\juan\Desktop\blog\MiBlog\obj\Debug\net8.0\MiBlog.pdb
 C:\Users\juan\Desktop\blog\MiBlog\obj\Debug\net8.0\MiBlog.genruntimeconfig.cache
 C:\Users\juan\Desktop\blog\MiBlog\obj\Debug\net8.0\ref\MiBlog.dll
 C:\Users\juan\Desktop\blog\MiBlog\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\juan\Desktop\blog\MiBlog\obj\Debug\net8.0\MiBlog.sourcelink.json
+C:\Users\juan\Desktop\blog\MiBlog\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

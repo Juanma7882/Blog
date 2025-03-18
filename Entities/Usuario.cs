@@ -9,5 +9,8 @@
         public string Apellido { get; set; }
         public string Email { get; set; }
         public int Dni { get; set; }
+
+        // Relación con UsuarioRol (Un usuario puede tener varios roles)
+        public List<UsuarioRol> UsuarioRoles { get; set; } = new List<UsuarioRol>();
     }
 }
