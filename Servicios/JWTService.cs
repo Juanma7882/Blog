@@ -1,9 +1,11 @@
 ﻿using MiBlog.AppDbContext;
 using MiBlog.DTOs;
 using MiBlog.Entities;
+using MiBlog.Migrations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -58,20 +60,33 @@ namespace MiBlog.Servicios
                 {
                     return null;
                 }
+
+                // Obtener la lista de roles del usuario
+                var roles = await _appDbContext.UsuarioRoles
+                    .Where(ur => ur.IdUsuario == usuario.IdPersona)
+                    .Select(ur => ur.Rol.NombreRol) // Obtiene los nombres de los roles
+                    .ToListAsync();
+
                 // generar el token
                 var jwtKey = _configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key no configurada");
                 var jwtIssuer = _configuration["Jwt:Issuer"];
                 var jwtAudience = _configuration["Jwt:Audience"];
                 var jwtSubject = _configuration["Jwt:Subject"];
 
-                var claims = new[]
+                
+                List<Claim> claims = new List<Claim>
                 {
                     new Claim(JwtRegisteredClaimNames.Sub, usuario.NombreUsuario),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("IdPersona", usuario.IdPersona.ToString()),
                     new Claim("NombreUsuario", usuario.NombreUsuario),
-                    new Claim("Clave", usuario.Clave)
                 };
+                foreach (var rol in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, rol));
+
+                }
+
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
                 var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -112,7 +127,6 @@ namespace MiBlog.Servicios
 
                 var idPersona = identity.Claims.FirstOrDefault(c => c.Type == "IdPersona")?.Value;
                 var nombreUsuario = identity.Claims.FirstOrDefault(c => c.Type == "NombreUsuario")?.Value;
-                var clave = identity.Claims.FirstOrDefault(c => c.Type == "Clave")?.Value;
 
                 if (string.IsNullOrEmpty(idPersona) || string.IsNullOrEmpty(nombreUsuario))
                 {

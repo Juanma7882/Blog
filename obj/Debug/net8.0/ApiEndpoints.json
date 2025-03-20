@@ -94,6 +94,22 @@
   },
   {
     "ContainingType": "MiBlog.Controllers.UsuarioController",
+    "Method": "IniciarSesion",
+    "RelativePath": "api/Usuario/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDTO",
+        "Type": "MiBlog.DTOs.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.UsuarioController",
     "Method": "ObtenerUsuario",
     "RelativePath": "api/Usuario/ObtenerUsuario/{id}",
     "HttpMethod": "GET",

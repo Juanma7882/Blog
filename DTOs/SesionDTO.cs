@@ -10,7 +10,7 @@ namespace MiBlog.DTOs
         public string Apellido { get; set; }
         public string Email { get; set; }
         public int Dni { get; set; }
-        public List<RolesEnum> UsuarioRoles { get; set; } = new List<RolesEnum>();
+        public List<string> UsuarioRoles { get; set; } = new List<string>();
 
     }
 }

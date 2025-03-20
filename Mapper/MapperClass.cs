@@ -5,6 +5,7 @@ using MiBlog.Enums;
 using MiBlog.Migrations;
 using Microsoft.EntityFrameworkCore;
 using System;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MiBlog.Mapper
 {
@@ -17,9 +18,29 @@ namespace MiBlog.Mapper
             _appDbContext = appDbContext;
         }
         // MODELOS DE MAPEO
+        // rol -> rolDTO
         // usuario <-> usuarioDTO 
         // usuario -> sesionDTO
         // LoginDTO -> sesionDTO
+
+        #region Rol
+        public async Task<RolDTO> RolToRolDTO(int id)
+        {
+            var rol = await _appDbContext.Roles.FirstOrDefaultAsync(r => r.IdRol == id);
+            if (rol == null)
+            {
+                return null; // Tambien se puede lanzar una execepcion
+            }
+            return new RolDTO
+            {
+                IdRol = rol.IdRol,
+                NombreRol = rol.NombreRol
+            };                
+        }
+
+
+        #endregion
+
 
         #region USUARIO
         public static UsuarioDTO MapUsuarioToUsuarioDTO(Usuario usuario)
@@ -54,8 +75,13 @@ namespace MiBlog.Mapper
             };
         }
 
-        public static SesionDTO MapUsuarioToSesiondto(Usuario usuario)
+        public async Task<SesionDTO> MapUsuarioToSesiondto(Usuario usuario)
         {
+            var roles = await _appDbContext.UsuarioRoles
+                .Where(ru => ru.IdUsuario == usuario.IdPersona)
+                .Select(ru => ru.Rol.NombreRol)
+                .ToListAsync();
+
             return new SesionDTO
             {
                 IdPersona = usuario.IdPersona,
@@ -64,11 +90,7 @@ namespace MiBlog.Mapper
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
                 Dni = usuario.Dni,
-                //UsuarioRoles = usuario.UsuarioRoles.Select(ur => (RolesEnum)ur.IdRol).ToList()
-                UsuarioRoles = usuario.UsuarioRoles
-                    .Where(ur => Enum.IsDefined(typeof(RolesEnum), ur.IdRol))
-                    .Select(ur => (RolesEnum)ur.IdRol)
-                    .ToList()
+                UsuarioRoles =  roles,
             };
         }
 
@@ -85,6 +107,11 @@ namespace MiBlog.Mapper
                 return null; // Usuario no encontrado
             }
 
+            var roles = await _appDbContext.UsuarioRoles
+                .Where(ru => ru.IdUsuario == usuario.IdPersona)
+                .Select(ru => ru.Rol.NombreRol)
+                .ToListAsync();
+
             return new SesionDTO
             {
                 IdPersona = usuario.IdPersona,
@@ -93,12 +120,12 @@ namespace MiBlog.Mapper
                 Apellido = usuario.Apellido,
                 Email = usuario.Email,
                 Dni = usuario.Dni,
-                UsuarioRoles = usuario.UsuarioRoles.Select(ur => (RolesEnum)ur.IdRol).ToList()
+                UsuarioRoles =roles,
             };
         }
 
         #endregion
 
-
+       
     }
 }

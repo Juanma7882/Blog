@@ -19,12 +19,14 @@ namespace MiBlog.Controllers
     {
         private readonly AppDbBlogContext _appDbContext;
         private readonly JWTService _jwtService;
+        private readonly MapperClass _mapperClass;
 
 
-        public UsuarioController(AppDbBlogContext appDbContext,JWTService jwtService)
+        public UsuarioController(AppDbBlogContext appDbContext,JWTService jwtService, MapperClass mapperClass)
         {
             _appDbContext = appDbContext;
             _jwtService = jwtService;
+            _mapperClass = mapperClass;
         }
 
         [HttpPost]
@@ -104,7 +106,7 @@ namespace MiBlog.Controllers
             }
         }
 
-
+        [Authorize(Roles = "SuperAdministrador")]
         [HttpGet]
         [Route("ListarUsuarios")]
         public async Task<ActionResult<List<SesionDTO>>> ListarUsuarios()
@@ -115,9 +117,13 @@ namespace MiBlog.Controllers
              .Include(u => u.UsuarioRoles)
              .ThenInclude(ur => ur.Rol)
              .ToListAsync();
+                List<SesionDTO> sesionDTOs = new List<SesionDTO>();
 
-                List<SesionDTO> sesionDTOs = usuarios.Select(usuario => MapperClass.MapUsuarioToSesiondto(usuario)).ToList();
-
+                foreach (var usuario in usuarios)
+                {
+                    var sesionDTO = await _mapperClass.MapUsuarioToSesiondto(usuario);
+                    sesionDTOs.Add(sesionDTO);
+                }
                 return Ok(sesionDTOs);
             }
             catch (Exception ex)
@@ -160,7 +166,7 @@ namespace MiBlog.Controllers
             }
         }
 
-
+        //[Authorize(Roles = "SuperAdministrador")]
         [HttpGet("ObtenerUsuario/{id}")]
         public async Task<ActionResult<SesionDTO>> ObtenerUsuario(int id)
         {
@@ -171,7 +177,7 @@ namespace MiBlog.Controllers
                 {
                     return NotFound();
                 }
-                SesionDTO UsuarioSesion = MapperClass.MapUsuarioToSesiondto(usuario);
+                SesionDTO UsuarioSesion = await _mapperClass.MapUsuarioToSesiondto(usuario);
 
                 return Ok(UsuarioSesion);
             }

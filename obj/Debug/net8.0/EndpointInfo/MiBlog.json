@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Usuario/Login": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Usuario/CrearUsuario": {
       "post": {
         "tags": [
@@ -255,6 +286,24 @@
   },
   "components": {
     "schemas": {
+      "LoginDTO": {
+        "required": [
+          "clave",
+          "nombreDeUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "nombreDeUsuario": {
+            "type": "string",
+            "nullable": true
+          },
+          "clave": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RolesEnum": {
         "enum": [
           1,
@@ -297,7 +346,7 @@
           "usuarioRoles": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RolesEnum"
+              "type": "string"
             },
             "nullable": true
           }
