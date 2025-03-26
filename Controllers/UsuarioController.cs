@@ -1,16 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MiBlog.AppDbContext;
-using Microsoft.AspNetCore.Authorization;
-using System.Reflection.Metadata;
-using System.Security.Claims;
-using MiBlog.Entities;
 using Microsoft.EntityFrameworkCore;
 using MiBlog.DTOs;
 using MiBlog.Mapper;
-using AutoMapper;
 using MiBlog.Servicios;
-using System.IdentityModel.Tokens.Jwt;
 namespace MiBlog.Controllers
 {
     [Route("api/[controller]")]
@@ -18,15 +11,13 @@ namespace MiBlog.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly AppDbBlogContext _appDbContext;
-        private readonly JWTService _jwtService;
         private readonly MapperClass _mapperClass;
-
-
-        public UsuarioController(AppDbBlogContext appDbContext,JWTService jwtService, MapperClass mapperClass)
+        private readonly UsuarioService _usuarioService;
+        public UsuarioController(AppDbBlogContext appDbContext, MapperClass mapperClass, UsuarioService usuarioService)
         {
             _appDbContext = appDbContext;
-            _jwtService = jwtService;
             _mapperClass = mapperClass;
+            _usuarioService = usuarioService;
         }
 
         [HttpPost]
@@ -35,18 +26,7 @@ namespace MiBlog.Controllers
         {
             try
             {
-                if (loginDTO == null)
-                {
-                    return BadRequest("Los datos de login no pueden estar vacíos.");
-                }
-                var usuario = await _jwtService.ValidarLogin(loginDTO);
-
-                if (usuario == null)
-                {
-                    return BadRequest("Los datos de login no pueden estar vacíos.");
-                }
-
-                var token = await _jwtService.GenerarToken(usuario);
+                string token = await _usuarioService.IniciarSesion(loginDTO);
 
                 if (token == null)
                 {
@@ -56,75 +36,54 @@ namespace MiBlog.Controllers
                 {
                     success = true,
                     message = "Login exitoso",
-                    token = token
+                    token
                 });
-
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno: {ex.Message}");
             }
         }
-
+      
 
         [HttpPost]
         [Route("CrearUsuario")]
-        public async Task<ActionResult<UsuarioDTO>> CrearUsuario(UsuarioDTO usuarioDTO)
+        public async Task<ActionResult<UsuarioDTO>> CrearUsuario([FromBody] UsuarioDTO usuarioDTO)
         {
+            if (usuarioDTO == null)
+            {
+                return BadRequest("El usuario no puede estar vacío.");
+            }
             try
             {
-                if (usuarioDTO == null)
-                {
-                    return BadRequest("Los datos del usuario no pueden estar vacíos.");
-                }
-
-                // Verificar si el nombre de usuario ya existe
-                bool existeUsuario = await _appDbContext.Usuarios.AnyAsync(u => u.NombreUsuario == usuarioDTO.NombreUsuario);
-                if (existeUsuario)
-                {
-                    return BadRequest("El nombre de usuario ya está en uso.");
-                }
-
-                // Mapear de UsuarioDTO a Usuario
-                Usuario nuevoUsuario = MapperClass.MapUsuarioDtoToUsuario(usuarioDTO);
-
-                _appDbContext.Usuarios.Add(nuevoUsuario);
-                await _appDbContext.SaveChangesAsync();
-
-                // Mapear de Usuario a UsuarioDTO
-                UsuarioDTO usuarioCreado = MapperClass.MapUsuarioToUsuarioDTO(nuevoUsuario);
-
-                return CreatedAtAction(nameof(CrearUsuario), new { id = nuevoUsuario.IdPersona }, usuarioCreado);
+                var usuarioCreado =  await _usuarioService.CrearUsuario(usuarioDTO);
+                return Ok(usuarioCreado);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message); // Código 409 si el usuario ya existe
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest($"Error al guardar el usuario en la base de datos: {ex.Message}");
+                return StatusCode(500, $"Error al guardar en la base de datos: {ex.Message}");
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error interno: {ex.Message}");
             }
+
         }
 
-        [Authorize(Roles = "SuperAdministrador")]
+        //[Authorize(Roles = "SuperAdministrador")]
         [HttpGet]
         [Route("ListarUsuarios")]
         public async Task<ActionResult<List<SesionDTO>>> ListarUsuarios()
         {
             try
             {
-                List<Usuario> usuarios = await _appDbContext.Usuarios
-             .Include(u => u.UsuarioRoles)
-             .ThenInclude(ur => ur.Rol)
-             .ToListAsync();
-                List<SesionDTO> sesionDTOs = new List<SesionDTO>();
+                List<SesionDTO> sesions = await _usuarioService.ListarSesionDTO();
 
-                foreach (var usuario in usuarios)
-                {
-                    var sesionDTO = await _mapperClass.MapUsuarioToSesiondto(usuario);
-                    sesionDTOs.Add(sesionDTO);
-                }
-                return Ok(sesionDTOs);
+                return Ok(sesions);
             }
             catch (Exception ex)
             {
@@ -132,30 +91,22 @@ namespace MiBlog.Controllers
             }
         }
 
-        [HttpPut("ActualizarUsuario/{id}")]
-        public async Task<ActionResult<UsuarioDTO>> ActualizarUsuario(int id, UsuarioDTO usuarioDTO)
+        [HttpPut("ActualizarUsuario/")]
+        public async Task<ActionResult<UsuarioDTO>> ActualizarUsuario(UsuarioDTO usuarioDTO)
         {
             try
             {
-                var usuario = await _appDbContext.Usuarios.FindAsync(id);
+                var usuario = await _appDbContext.Usuarios.FindAsync(usuarioDTO.Id);
                 if (usuario == null)
                 {
-                    return NotFound();
+                    return NotFound("Usuario no encontrado.");
                 }
 
-                usuario.NombreUsuario = usuarioDTO.NombreUsuario;
-                usuario.Clave = usuarioDTO.Clave; // Recuerda encriptar la clave si es necesario
-                usuario.Nombre = usuarioDTO.Nombre;
-                usuario.Apellido = usuarioDTO.Apellido;
-                usuario.Email = usuarioDTO.Email;
-                usuario.Dni = usuarioDTO.Dni;
-
-
-                // Actualizar roles si es necesario
-                usuario.UsuarioRoles.Clear();
-                usuario.UsuarioRoles.AddRange(usuarioDTO.UsuarioRoles.Select(rol => new UsuarioRol { IdRol = (int)rol, IdUsuario = usuario.IdPersona }));
-
-                await _appDbContext.SaveChangesAsync();
+                bool actualizado = await _usuarioService.EditarUsuario(usuarioDTO);
+                if (!actualizado)
+                {
+                    return BadRequest("No se pudo actualizar el usuario.");
+                }
 
                 return Ok(usuarioDTO);
 
@@ -199,8 +150,12 @@ namespace MiBlog.Controllers
                     return NotFound();
                 }
 
-                _appDbContext.Usuarios.Remove(usuario);
-                await _appDbContext.SaveChangesAsync();
+                bool usuarioEliminado =await _usuarioService.EliminarUsuario(id);
+
+                if (!usuarioEliminado)
+                {
+                    throw new Exception("Error al eliminar un usuario");
+                }
 
                 return Ok(new {messaje = "usuario eliminado correctamente"}); 
             }

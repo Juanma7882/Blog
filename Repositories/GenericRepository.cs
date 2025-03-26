@@ -76,7 +76,10 @@ namespace MiBlog.Repositories
         {
             try
             {
-                IQueryable<TModel> queryModelo = filtro == null ? _appDbContext.Set<TModel>() : _appDbContext.Set<TModel>().Where(filtro);
+                IQueryable<TModel> queryModelo = filtro == null
+                ? _appDbContext.Set<TModel>()// si no hay filto vamos a ejecutar esto
+                : _appDbContext.Set<TModel>().Where(filtro);// si hay filto vamos a ejecutar esto
+
                 return queryModelo;
             }
             catch (Exception ex)
@@ -84,5 +87,6 @@ namespace MiBlog.Repositories
                 throw new Exception($"Error al consultar ", ex);
             }
         }
+      
     }
 }

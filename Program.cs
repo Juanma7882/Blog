@@ -19,6 +19,10 @@ using System.Text;
 using MiBlog.Servicios;
 using MiBlog.Mapper;
 using System.Security.Claims;
+using Azure;
+using MiBlog.Repositories.Contrato;
+using MiBlog.Repositories;
+using MiBlog.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +36,14 @@ builder.Services.AddDbContext<AppDbBlogContext>(options => {
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
-builder.Services.AddScoped<JWTService>();
+
+//builder.Services.AddScoped<IGenericRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<Usuario>), typeof(GenericRepository<Usuario>));
+
 builder.Services.AddScoped<MapperClass>();
+builder.Services.AddScoped<JWTService>();
+builder.Services.AddScoped<UsuarioService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

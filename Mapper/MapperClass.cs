@@ -20,7 +20,7 @@ namespace MiBlog.Mapper
         // MODELOS DE MAPEO
         // rol -> rolDTO
         // usuario <-> usuarioDTO 
-        // usuario -> sesionDTO
+        // usuario <-> sesionDTO
         // LoginDTO -> sesionDTO
 
         #region Rol
@@ -38,15 +38,15 @@ namespace MiBlog.Mapper
             };                
         }
 
-
         #endregion
 
 
         #region USUARIO
-        public static UsuarioDTO MapUsuarioToUsuarioDTO(Usuario usuario)
+        public  UsuarioDTO MapUsuarioToUsuarioDTO(Usuario usuario)
         {
             return new UsuarioDTO
             {
+                Id = usuario.IdPersona,
                 NombreUsuario = usuario.NombreUsuario,
                 Clave = usuario.Clave, 
                 Nombre = usuario.Nombre,
@@ -57,10 +57,11 @@ namespace MiBlog.Mapper
             };
         }
 
-        public static Usuario MapUsuarioDtoToUsuario(UsuarioDTO usuarioDTO)
+        public  Usuario MapUsuarioDtoToUsuario(UsuarioDTO usuarioDTO)
         {
             return new Usuario
             {
+                IdPersona = usuarioDTO.Id,
                 NombreUsuario = usuarioDTO.NombreUsuario,
                 Clave = usuarioDTO.Clave,  // Recuerda encriptar la clave en producción
                 Nombre = usuarioDTO.Nombre,
@@ -91,6 +92,26 @@ namespace MiBlog.Mapper
                 Email = usuario.Email,
                 Dni = usuario.Dni,
                 UsuarioRoles =  roles,
+            };
+        }
+
+        public async Task<Usuario> MapSesionDtoToUsuario(SesionDTO sesionDTO)
+        {
+           
+            Usuario usuario = await _appDbContext.Usuarios.FirstOrDefaultAsync(u => u.NombreUsuario == sesionDTO.NombreUsuario);
+
+            if (usuario == null) throw new Exception("El usuario es nulo");
+
+            return new Usuario
+            {
+                IdPersona = usuario.IdPersona,
+                NombreUsuario = usuario.NombreUsuario,
+                Clave = usuario.Clave,  // Recuerda encriptar la clave en producción
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                Email = usuario.Email,
+                Dni = usuario.Dni,
+                UsuarioRoles = usuario.UsuarioRoles,
             };
         }
 
