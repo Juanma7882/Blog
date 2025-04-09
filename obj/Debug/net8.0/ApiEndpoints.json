@@ -1,5 +1,227 @@
 [
   {
+    "ContainingType": "MiBlog.Controllers.BlogController",
+    "Method": "CrearBlogDTO",
+    "RelativePath": "api/Blog/CrearBlog",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogDto",
+        "Type": "MiBlog.DTOs.BlogDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.BlogDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.BlogController",
+    "Method": "EditarBlog",
+    "RelativePath": "api/Blog/EditarBlog",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blogDTO",
+        "Type": "MiBlog.DTOs.BlogDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.CardBlog",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.BlogController",
+    "Method": "EliminarBlog",
+    "RelativePath": "api/Blog/EliminarBlog",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.BlogController",
+    "Method": "ListarCardBlog",
+    "RelativePath": "api/Blog/ListarCardBlog",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.CardBlog",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.BlogController",
+    "Method": "ObtenerBlog",
+    "RelativePath": "api/Blog/ObtenerBlog/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.CardBlog",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.EtiquetaController",
+    "Method": "BuscarEtiqueta",
+    "RelativePath": "api/Etiqueta/BuscarEtiqueta",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "NombreEtiqueta",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.EtiquetaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.EtiquetaController",
+    "Method": "CrearEtiqueta",
+    "RelativePath": "api/Etiqueta/CrearEtiqueta",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "etiquetaDTO",
+        "Type": "MiBlog.DTOs.EtiquetaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.EtiquetaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.EtiquetaController",
+    "Method": "EliminarEtiqueta",
+    "RelativePath": "api/Etiqueta/EliminarEtiqueta",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nombre",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "MiBlog.Controllers.EtiquetaController",
+    "Method": "ListarEtiqueta",
+    "RelativePath": "api/Etiqueta/ListarEtiqueta",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "MiBlog.DTOs.EtiquetaDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "MiBlog.Controllers.UsuarioController",
     "Method": "ActualizarUsuario",
     "RelativePath": "api/Usuario/ActualizarUsuario",

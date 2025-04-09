@@ -4,6 +4,7 @@ using MiBlog.AppDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MiBlog.Migrations
 {
     [DbContext(typeof(AppDbBlogContext))]
-    partial class AppDbBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20250328153637_Blog")]
+    partial class Blog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +65,6 @@ namespace MiBlog.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdEtiqueta")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdBlogEtiqueta")
                         .HasColumnType("int");
 
                     b.HasKey("IdBlog", "IdEtiqueta");
@@ -171,6 +171,24 @@ namespace MiBlog.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
+            modelBuilder.Entity("MiBlog.Entities.UsuarioBlog", b =>
+                {
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdBlog")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuarioRol")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdUsuario", "IdBlog");
+
+                    b.HasIndex("IdBlog");
+
+                    b.ToTable("UsuarioBlogs", (string)null);
+                });
+
             modelBuilder.Entity("MiBlog.Entities.UsuarioRol", b =>
                 {
                     b.Property<int>("IdUsuarioRol")
@@ -213,6 +231,25 @@ namespace MiBlog.Migrations
                     b.Navigation("Etiqueta");
                 });
 
+            modelBuilder.Entity("MiBlog.Entities.UsuarioBlog", b =>
+                {
+                    b.HasOne("MiBlog.Entities.Blog", "blog")
+                        .WithMany("usuarioBlog")
+                        .HasForeignKey("IdBlog")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MiBlog.Entities.Usuario", "Usuario")
+                        .WithMany("UsuarioBlog")
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("blog");
+                });
+
             modelBuilder.Entity("MiBlog.Entities.UsuarioRol", b =>
                 {
                     b.HasOne("MiBlog.Entities.Rol", "Rol")
@@ -235,6 +272,8 @@ namespace MiBlog.Migrations
             modelBuilder.Entity("MiBlog.Entities.Blog", b =>
                 {
                     b.Navigation("BlogEtiquetas");
+
+                    b.Navigation("usuarioBlog");
                 });
 
             modelBuilder.Entity("MiBlog.Entities.Etiqueta", b =>
@@ -249,6 +288,8 @@ namespace MiBlog.Migrations
 
             modelBuilder.Entity("MiBlog.Entities.Usuario", b =>
                 {
+                    b.Navigation("UsuarioBlog");
+
                     b.Navigation("UsuarioRoles");
                 });
 #pragma warning restore 612, 618

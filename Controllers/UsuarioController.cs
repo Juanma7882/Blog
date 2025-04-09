@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MiBlog.DTOs;
 using MiBlog.Mapper;
 using MiBlog.Servicios;
+using Microsoft.AspNetCore.Authorization;
 namespace MiBlog.Controllers
 {
     [Route("api/[controller]")]
@@ -13,12 +14,15 @@ namespace MiBlog.Controllers
         private readonly AppDbBlogContext _appDbContext;
         private readonly MapperClass _mapperClass;
         private readonly UsuarioService _usuarioService;
+
+
         public UsuarioController(AppDbBlogContext appDbContext, MapperClass mapperClass, UsuarioService usuarioService)
         {
             _appDbContext = appDbContext;
             _mapperClass = mapperClass;
             _usuarioService = usuarioService;
         }
+
 
         [HttpPost]
         [Route("Login")]
@@ -47,6 +51,7 @@ namespace MiBlog.Controllers
       
 
         [HttpPost]
+        [Authorize(Roles = "AdministrarUsuarios")]
         [Route("CrearUsuario")]
         public async Task<ActionResult<UsuarioDTO>> CrearUsuario([FromBody] UsuarioDTO usuarioDTO)
         {
@@ -74,8 +79,10 @@ namespace MiBlog.Controllers
 
         }
 
-        //[Authorize(Roles = "SuperAdministrador")]
+
+
         [HttpGet]
+        [Authorize(Roles = "AdministrarBlog")]
         [Route("ListarUsuarios")]
         public async Task<ActionResult<List<SesionDTO>>> ListarUsuarios()
         {
@@ -90,6 +97,8 @@ namespace MiBlog.Controllers
                 return StatusCode(500, $"Error al listar usuarios: {ex.Message}");
             }
         }
+
+
 
         [HttpPut("ActualizarUsuario/")]
         public async Task<ActionResult<UsuarioDTO>> ActualizarUsuario(UsuarioDTO usuarioDTO)
@@ -117,8 +126,11 @@ namespace MiBlog.Controllers
             }
         }
 
-        //[Authorize(Roles = "SuperAdministrador")]
+
+
+        //[Auto(Roles = "SuperAdministrador")]
         [HttpGet("ObtenerUsuario/{id}")]
+        [Authorize(Roles = "SuperAdministrador")]
         public async Task<ActionResult<SesionDTO>> ObtenerUsuario(int id)
         {
             try
@@ -137,6 +149,8 @@ namespace MiBlog.Controllers
                 throw new Exception("Error al obtener un usuario " + ex.Message);
             }
         }
+
+
 
         [HttpDelete("EliminarUsuario/{id}")]
         public async Task<ActionResult> EliminarUsuario(int id)
@@ -164,8 +178,6 @@ namespace MiBlog.Controllers
                 throw new Exception("Error al elimanar un usuario", ex);
             }
         }
-
-
 
     }
 }

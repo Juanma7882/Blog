@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiBlog")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0963038168b15cd4df8517516b37d832213d56e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c4c9b0ef7def4dc03a87924dbea1251a393f3965")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiBlog")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiBlog")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

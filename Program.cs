@@ -40,8 +40,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddScoped<IGenericRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<Usuario>), typeof(GenericRepository<Usuario>));
 
+builder.Services.AddScoped(typeof(IGenericRepository<Etiqueta>), typeof(GenericRepository<Etiqueta>));
+
+builder.Services.AddScoped(typeof(IGenericRepository<Blog>), typeof(GenericRepository<Blog>));
+
 builder.Services.AddScoped<MapperClass>();
 builder.Services.AddScoped<JWTService>();
+builder.Services.AddScoped<EtiquetaService>();
+builder.Services.AddScoped<BlogService>();
 builder.Services.AddScoped<UsuarioService>();
 
 builder.Services.AddControllers();

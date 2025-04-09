@@ -9,14 +9,14 @@ namespace MiBlog.Servicios
 {
     public class UsuarioService
     {
-        private readonly IGenericRepository<Usuario> _repository;
+        private readonly IGenericRepository<Usuario> _genericRepository;
         private readonly MapperClass _mapperClass;
         private readonly JWTService _jwtService;
 
 
         public UsuarioService(IGenericRepository<Usuario> genericRepository,MapperClass mapperClass, JWTService jwtService)
         {
-            _repository = genericRepository;
+            _genericRepository = genericRepository;
             _mapperClass = mapperClass;
             _jwtService = jwtService;
         }
@@ -30,7 +30,7 @@ namespace MiBlog.Servicios
                     throw new ArgumentNullException(nameof(loginDTO), "Los datos de inicio de sesión no pueden estar vacíos.");
                 }
 
-                var queryUsuario = await _repository.Consultar(u =>
+                var queryUsuario = await _genericRepository.Consultar(u =>
                     u.NombreUsuario == loginDTO.NombreDeUsuario &&
                     u.Clave == loginDTO.Clave
                     );
@@ -79,7 +79,7 @@ namespace MiBlog.Servicios
                     throw new ArgumentNullException(nameof(usuarioDTO), "El usuario no puede estar vacío");
                 }
 
-                var usuarioExistente = await _repository.Consultar(u =>
+                var usuarioExistente = await _genericRepository.Consultar(u =>
                 u.NombreUsuario == usuarioDTO.NombreUsuario
                 );
 
@@ -101,7 +101,7 @@ namespace MiBlog.Servicios
                     }).ToList(),
                 };
 
-                Usuario usuarioCreado = await _repository.Crear(usuario);
+                Usuario usuarioCreado = await _genericRepository.Crear(usuario);
 
                 return _mapperClass.MapUsuarioToUsuarioDTO(usuarioCreado);
             }
@@ -112,19 +112,20 @@ namespace MiBlog.Servicios
             }
         }
 
+      
 
         public async Task<List<SesionDTO>> ListarSesionDTO()
         {
             try
             {
-                var queryUsuario = await _repository.Consultar();
+                var queryUsuario = await _genericRepository.Consultar();
                 var listaUsuario = queryUsuario.Include(u => u.UsuarioRoles).ThenInclude(ur => ur.Rol).ToList();
 
                 List<SesionDTO> usuarioDTOs = new List<SesionDTO>();
 
                 foreach (var usuarios in listaUsuario)
                 {
-                    SesionDTO us =await _mapperClass.MapUsuarioToSesiondto(usuarios);
+                    SesionDTO us = await _mapperClass.MapUsuarioToSesiondto(usuarios);
                     usuarioDTOs.Add(us);
                 }
 
@@ -146,7 +147,7 @@ namespace MiBlog.Servicios
                     throw new ArgumentNullException(nameof(usuarioDTO), "El usuario no puede estar vacío");
                 }
 
-                var usuarioEncontrado = await _repository.Obtener(u => u.IdPersona == usuarioDTO.Id);
+                var usuarioEncontrado = await _genericRepository.Obtener(u => u.IdPersona == usuarioDTO.Id);
                 if (usuarioEncontrado == null)
                 {
                     throw new InvalidOperationException("Usuario no encontrado.");
@@ -165,7 +166,7 @@ namespace MiBlog.Servicios
                     IdRol = (int)rolEnum  // Convierte el enum en el ID del rol correspondiente
                 }).ToList();
 
-                return await _repository.Editar(usuarioEncontrado);
+                return await _genericRepository.Editar(usuarioEncontrado);
 
             }
             catch (Exception ex)
@@ -179,14 +180,14 @@ namespace MiBlog.Servicios
         {
             try
             {
-                var usuario = await _repository.Obtener(u => u.IdPersona == id);
+                var usuario = await _genericRepository.Obtener(u => u.IdPersona == id);
 
                 if (usuario == null)
                 {
                     throw new TaskCanceledException("El usuario no existe");
                 }
 
-                bool usuarioEliminado =await _repository.Eliminar(usuario);
+                bool usuarioEliminado =await _genericRepository.Eliminar(usuario);
 
                 if (!usuarioEliminado)
                     throw new TaskCanceledException("No se pudo eliminar");

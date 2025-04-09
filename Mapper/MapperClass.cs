@@ -6,6 +6,7 @@ using MiBlog.Migrations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MiBlog.Mapper
 {
@@ -19,9 +20,15 @@ namespace MiBlog.Mapper
         }
         // MODELOS DE MAPEO
         // rol -> rolDTO
+
         // usuario <-> usuarioDTO 
         // usuario <-> sesionDTO
         // LoginDTO -> sesionDTO
+
+        // eitqueta <-> etiquetaDTO
+
+        // Blog <-> blogDTO
+        // blog -> blogcard
 
         #region Rol
         public async Task<RolDTO> RolToRolDTO(int id)
@@ -147,6 +154,141 @@ namespace MiBlog.Mapper
 
         #endregion
 
+
+        #region ETIQUETA
+        public EtiquetaDTO MapEtiquetaToEtiquetaDTO(Etiqueta etiqueta)
+        {
+            if (etiqueta == null)
+            {
+                throw new ArgumentNullException(nameof(etiqueta), "La etiqueta no puede ser nula.");
+            }
+            return new EtiquetaDTO
+            {
+                IdEtiqueta = etiqueta.IdEtiqueta,
+                Nombre = etiqueta.Nombre,
+            };
+        }
+
+        public async Task<Etiqueta> MapEtiquetaDTOToEtiqueta(EtiquetaDTO etiquetaDTO)
+        {
+            if (etiquetaDTO == null)
+            {
+                throw new ArgumentNullException(nameof(etiquetaDTO), "El DTO de etiqueta no puede ser nulo.");
+            }
+
+            var etiquetaExiste = await _appDbContext.etiquetas.FirstOrDefaultAsync(e => e.Nombre == etiquetaDTO.Nombre);
+
+            if(etiquetaExiste != null)
+            {
+                return new Etiqueta
+                {
+                    IdEtiqueta = etiquetaDTO.IdEtiqueta,
+                    Nombre = etiquetaDTO.Nombre,
+                    BlogEtiquetas = etiquetaExiste.BlogEtiquetas
+                };
+            }
+            else
+            {
+                return new Etiqueta
+                {
+                    IdEtiqueta = etiquetaDTO.IdEtiqueta,
+                    Nombre = etiquetaDTO.Nombre,
+                    BlogEtiquetas = new List<Entities.BlogEtiqueta>() // Lista vacía para evitar null
+                };
+            }
+        }
+        #endregion
+
+        #region Blog
+
+        public async Task<BlogDTO> MapBlogToBlogDTO(Entities.Blog blog)
+        {
+            var etiquetas = await _appDbContext.blogEtiquetas
+                 .Where(be => be.IdBlog == blog.IdBlog)
+                .Include(be => be.Etiqueta)
+                .Select(be => be.Etiqueta.Nombre)
+                .ToListAsync();
+            return new BlogDTO
+            {
+                 IdBlog = blog.IdBlog,
+                 Titulo = blog.Titulo,
+                 Contenido = blog.Contenido,
+                 FechaDePublicacion = blog.FechaDePublicacion,
+                  Descripcion = blog.Descripcion,
+                  Enlace = blog.Enlace,
+                  Etiquetas  = etiquetas,
+            };
+        }
+
+        public async Task<Entities.Blog> MapBlogDTOToBlog(BlogDTO blogDTO)
+        {
+            if (blogDTO == null)
+                throw new ArgumentNullException(nameof(blogDTO));
+
+            var blog = new Entities.Blog
+            {
+                IdBlog = blogDTO.IdBlog,
+                Titulo = blogDTO.Titulo,
+                Contenido = blogDTO.Contenido,
+                FechaDePublicacion = blogDTO.FechaDePublicacion,
+                Descripcion = blogDTO.Descripcion,
+                Enlace = blogDTO.Enlace,
+                BlogEtiquetas = new List<Entities.BlogEtiqueta>()
+            };
+
+            foreach (var nombreEtiqueta in blogDTO.Etiquetas)
+            {
+                var etiqueta = await _appDbContext.etiquetas
+                    .FirstOrDefaultAsync(e => e.Nombre.ToLower() == nombreEtiqueta.ToLower());
+
+                if (etiqueta != null)
+                {
+                    blog.BlogEtiquetas.Add(new Entities.BlogEtiqueta
+                    {
+                        IdEtiqueta = etiqueta.IdEtiqueta,
+                        Etiqueta = etiqueta
+                    });
+                }
+                else
+                {
+                    // Opcional: crear etiqueta si no existe
+                    var nuevaEtiqueta = new Etiqueta { Nombre = nombreEtiqueta };
+                    _appDbContext.etiquetas.Add(nuevaEtiqueta);
+                    await _appDbContext.SaveChangesAsync();
+
+                    blog.BlogEtiquetas.Add(new Entities.BlogEtiqueta
+                    {
+                        IdEtiqueta = nuevaEtiqueta.IdEtiqueta,
+                        Etiqueta = nuevaEtiqueta
+                    });
+                }
+            }
+
+            return blog;
+        }
+
+
+        public async Task<CardBlog> MapBlogToCardBlog(Entities.Blog blog)
+        {
+            var etiquetas = await _appDbContext.blogEtiquetas
+                .Where(be => be.IdBlog == blog.IdBlog)
+                .Include(be => be.Etiqueta)
+                .Select(be => be.Etiqueta.Nombre)
+                .ToListAsync();
+            return new CardBlog
+            {
+                 IdBlog = blog.IdBlog,
+                 Titulo = blog.Titulo,
+                 FechaDePublicacion= blog.FechaDePublicacion,
+                 Descripcion = blog.Descripcion,
+                 Enlace  = blog.Enlace,
+                BlogEtiquetas = etiquetas,
+            };
+        }
+
+
        
+
+        #endregion
     }
 }
