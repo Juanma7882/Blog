@@ -1,4 +1,4 @@
-📝 Blog de Notas - Backend
+### Blog de Notas - Backend
 Este es el backend de una aplicación de Blog de Notas, desarrollada con .NET Core y utilizando SQL Server como sistema de base de datos. La comunicación con la base de datos se gestiona mediante Entity Framework Core (EF Core) como ORM, lo que permite una interacción fluida y segura con las entidades del dominio.
 
 🔧 Características principales:
